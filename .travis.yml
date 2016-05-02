@@ -2,7 +2,8 @@
 sudo: true
 language: ruby
 cache: bundler
-before_install: sudo apt-get install libzmq3-dev
+before_install:
+- git clone -b feature/event_interface https://github.com/elastic/logstash
 rvm:
 - jruby-1.7.24
 script:
