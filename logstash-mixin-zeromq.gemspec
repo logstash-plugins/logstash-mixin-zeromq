@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = s.files.grep(%r{^(test|spec|features)/})
 
   # Gem dependencies
-  s.add_runtime_dependency "logstash-core-plugin-api", ">= 1.60", "<= 2.99"
+  s.add_runtime_dependency "logstash-core-plugin-api", ">= 1.60", "<= 5.99"
 
   s.add_runtime_dependency 'ffi-rzmq', '~> 2.0.4'
 
