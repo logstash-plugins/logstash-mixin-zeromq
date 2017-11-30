@@ -5,6 +5,10 @@ require 'logstash/plugin_mixins/zeromq'
 class Dummy < LogStash::Inputs::Base
   attr_accessor :mode
 
+  def set_logger(logger)
+   @logger = logger
+  end
+
   include LogStash::PluginMixins::ZeroMQ
   def server?
     @mode == "server"
@@ -44,7 +48,7 @@ describe LogStash::PluginMixins::ZeroMQ do
 
       it "a 'bound' info line is logged" do
         allow(tracer).to receive(:debug)
-        impl.logger = tracer
+        impl.set_logger(tracer)  
         expect(tracer).to receive(:info).with("0mq: bound", {:address=>"tcp://127.0.0.1:#{port}"})
         impl.setup(socket, "tcp://127.0.0.1:#{port}")
       end
@@ -59,7 +63,7 @@ describe LogStash::PluginMixins::ZeroMQ do
 
       it "a 'connected' info line is logged" do
         allow(tracer).to receive(:debug)
-        impl_client.logger = tracer
+        impl_client.set_logger(tracer) 
         expect(tracer).to receive(:info).with("0mq: connected", {:address=>"tcp://127.0.0.1:#{port}"})
         impl_client.setup(socket, "tcp://127.0.0.1:#{port}")
       end

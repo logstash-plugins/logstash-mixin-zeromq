@@ -4,11 +4,6 @@ language: ruby
 cache: bundler
 before_install:
 - sudo apt-get install libzmq3-dev
-rvm:
-- jruby-1.7.24
-script:
-- bundle exec rspec spec
-jdk: oraclejdk8
 matrix:
   include:
   - rvm: jruby-9.1.13.0
@@ -20,3 +15,7 @@ matrix:
   - rvm: jruby-1.7.27
     env: LOGSTASH_BRANCH=5.6
   fast_finish: true
+install: true
+script: ci/build.sh
+jdk: oraclejdk8
+
