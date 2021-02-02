@@ -12,8 +12,12 @@ end
 
 module LogStash::PluginMixins::ZeroMQ
   # LOGSTASH-400
-  # see https://github.com/chuckremes/ffi-rzmq/blob/master/lib/ffi-rzmq/socket.rb#L93-117
-  STRING_OPTS = %w{IDENTITY SUBSCRIBE UNSUBSCRIBE}
+  # see https://github.com/chuckremes/ffi-rzmq-core/blob/master/lib/ffi-rzmq-core/constants.rb#L213-L225
+  # or https://github.com/chuckremes/ffi-rzmq-core/blob/65b64c8f38e70a26af61459694f95737eb1b3899/lib/ffi-rzmq-core/constants.rb#L213-L225
+  @@string_opts = %w{IDENTITY SUBSCRIBE UNSUBSCRIBE}
+  if LibZMQ.version4?
+    @@string_opts += %w{ LAST_ENDPOINT ZAP_DOMAIN PLAIN_USERNAME PLAIN_PASSWORD CURVE_PUBLICKEY CURVE_SERVERKEY CURVE_SECRETKEY}
+  end
 
   def context
     LogStash::PluginMixins::ZeroMQContext.context
@@ -43,7 +47,7 @@ module LogStash::PluginMixins::ZeroMQ
     options.each do |opt,value|
       sockopt = opt.split('::')[1]
       option = ZMQ.const_defined?(sockopt) ? ZMQ.const_get(sockopt) : ZMQ.const_missing(sockopt)
-      unless STRING_OPTS.include?(sockopt)
+      unless @@string_opts.include?(sockopt)
         begin
           Float(value)
           value = value.to_i
