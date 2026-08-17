@@ -1,6 +1,6 @@
 # logstash-mixin-zeromq
 
-[![Build Status](https://travis-ci.com/logstash-plugins/logstash-mixin-zeromq.svg?branch=master)](https://travis-ci.com/logstash-plugins/logstash-mixin-zeromq)
+[![Unit Tests](https://github.com/logstash-plugins/logstash-mixin-zeromq/actions/workflows/unit-tests.yml/badge.svg?branch=main)](https://github.com/logstash-plugins/logstash-mixin-zeromq/actions/workflows/unit-tests.yml)
 
 This is a mixin library to share code for zeromq input, output and filter Logstash plugins.
 
